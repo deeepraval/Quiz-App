@@ -16,7 +16,8 @@
     <artifactId>quiz-app</artifactId>
     <version>1.0.0</version>
     <name>Quiz App</name>
-    
+            <packaging>jar</packaging>
+
     <properties>
         <java.version>17</java.version>
     </properties>
