@@ -34,13 +34,25 @@ public class UserService {
     }
 
     public String login(LoginSignupRequest request) {
-        Optional<User> userOpt = userRepository.findByUsername(request.getUsername());
+        Optional<User> userOpt;
+
+        // If request contains email, search by email
+        if (request.getEmail() != null && !request.getEmail().isEmpty()) {
+            userOpt = userRepository.findByEmail(request.getEmail());
+        } 
+        else {
+            userOpt = userRepository.findByUsername(request.getUsername());
+        }
+
         if (userOpt.isPresent()) {
             User user = userOpt.get();
             if (user.getPassword().equals(request.getPassword())) {
-                return "Login successful for user: " + request.getUsername();
+                return "Login successful for user: " 
+                       + (user.getUsername() != null ? user.getUsername() : user.getEmail());
             }
         }
+
         return "Invalid username or password!";
     }
+
 }
